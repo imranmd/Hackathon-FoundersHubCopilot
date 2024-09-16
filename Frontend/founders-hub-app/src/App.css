@@ -36,3 +36,27 @@
     transform: rotate(360deg);
   }
 }
+
+.app {
+  font-family: Arial, sans-serif;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  background-color: #282c34;
+  padding: 10px;
+}
+
+.icon {
+  margin-left: 20px;
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+}
+
+.main-heading {
+  font-size: 48px;
+  color: #282c34;
+  margin-top: 20px;
+}
