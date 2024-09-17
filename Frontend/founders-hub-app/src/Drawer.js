@@ -16,7 +16,6 @@ import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import SchoolIcon from '@mui/icons-material/School';
 import ExploreIcon from '@mui/icons-material/Explore';
 import TaskIcon from '@mui/icons-material/Task';
-import SavingsIcon from '@mui/icons-material/Savings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import HelpIcon from '@mui/icons-material/Help';
 import ResponsiveAppBar from './AppBar';
