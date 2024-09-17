@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,39 +10,9 @@ import './LandingPage.css';
 const directLineSecret = 'YOUR_DIRECT_LINE_SECRET_HERE'; // Replace with your Direct Line Secret
 
 const LandingPage: React.FC = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   return (
     <div className="chatbot-wrapper">
-      {/* Sidebar */}
-      {/* <div className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}>
-        <div className="sidebar-header">
-          <IconButton onClick={toggleSidebar}>
-            {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
-          </IconButton>
-        </div>
-        {isSidebarOpen && (
-          <ul className="sidebar-menu">
-            <li>
-              <SearchIcon className="sidebar-icon" />
-              <span>Explore Founders Hub</span>
-            </li>
-            <li>
-              <AutoGraphIcon className="sidebar-icon" />
-              <span>Architecture Design Tool</span>
-            </li>
-            <li>
-              <TimelineIcon className="sidebar-icon" />
-              <span>Personalized Learning Roadmap</span>
-            </li>
-          </ul>
-        )}
-      </div> */}
-
       {/* Main Content */}
       <div className="main-content">
         <Typography variant="h4" gutterBottom>
