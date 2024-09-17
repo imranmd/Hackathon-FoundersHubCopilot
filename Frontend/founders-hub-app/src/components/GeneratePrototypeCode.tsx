@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GeneratePrototypeCode() {
+const GeneratePrototypeCode: React.FC = () => {
   return <h1 className="main-heading">Generate Prototype Page</h1>;
 }
 

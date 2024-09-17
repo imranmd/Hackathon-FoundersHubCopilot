@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Explore() {
+const Explore: React.FC = () => {
   return <h1 className="main-heading">Explore Page</h1>;
 }
 

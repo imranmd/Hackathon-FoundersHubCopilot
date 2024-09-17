@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Questionere() {
+const Questionere: React.FC = () => {
   return <h1 className="main-heading">Questionere Page</h1>;
 }
 

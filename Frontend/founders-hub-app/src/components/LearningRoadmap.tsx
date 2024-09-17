@@ -1,6 +1,6 @@
 import React from 'react';
 
-function LearningRoadmap() {
+const LearningRoadmap: React.FC = () => {
   return <h1 className="main-heading">Learning Roadmap Page</h1>;
 }
 
