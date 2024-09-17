@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Card, CardContent, Typography, IconButton } from '@mui/material';
+import { Box, Card, CardContent, Typography } from '@mui/material';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import EditIcon from '@mui/icons-material/Edit';
 import SecurityIcon from '@mui/icons-material/Security';
 import SavingsIcon from '@mui/icons-material/Savings';
-import SearchIcon from '@mui/icons-material/Search';
-import AutoGraphIcon from '@mui/icons-material/AutoGraph';
-import TimelineIcon from '@mui/icons-material/Timeline';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
 import Chatbot from '../founders-hub-bot/Chatbot';
 import './LandingPage.css';
 
