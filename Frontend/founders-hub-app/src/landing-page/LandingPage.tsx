@@ -24,7 +24,7 @@ const LandingPage: React.FC = () => {
   return (
     <div className="chatbot-wrapper">
       {/* Sidebar */}
-      <div className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}>
+      {/* <div className={`sidebar ${isSidebarOpen ? 'open' : 'collapsed'}`}>
         <div className="sidebar-header">
           <IconButton onClick={toggleSidebar}>
             {isSidebarOpen ? <CloseIcon /> : <MenuIcon />}
@@ -46,12 +46,12 @@ const LandingPage: React.FC = () => {
             </li>
           </ul>
         )}
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="main-content">
         <Typography variant="h4" gutterBottom>
-          Welcome to the Founder Hub Copilot
+          Welcome to the Founder Hub
         </Typography>
 
         <Box className="card-container">
