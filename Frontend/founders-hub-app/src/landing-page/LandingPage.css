@@ -1,54 +1,11 @@
 /* Layout for the chatbot */
 .chatbot-wrapper {
   display: flex;
-  min-height: 100vh;
-}
-
-.sidebar {
-  background-color: #f5f5f5;
-  width: 250px;
-  transition: width 0.3s ease;
-  padding: 10px;
-  border-right: 1px solid #ccc;
-}
-
-.sidebar.collapsed {
-  width: 60px;
-}
-
-.sidebar-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-}
-
-.sidebar-menu {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar-menu li {
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
-  cursor: pointer;
-}
-
-.sidebar-menu li:hover {
-  background-color: #ddd;
-}
-
-.sidebar-icon {
-  margin-right: 10px;
-}
-
-.sidebar.collapsed .sidebar-menu li span {
-  display: none;
+  min-height: 80vh;
 }
 
 .main-content {
   flex-grow: 1;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -58,24 +15,39 @@
 .card-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
 .action-card {
   width: 100%;
-  max-width: 350px;
-  padding: 15px;
+  max-width: 300px; /* Adjusted width */
+  padding: 10px; /* Adjusted padding */
+}
+
+.card-content {
+  display: flex;
+  align-items: center; /* Aligns items vertically in the center */
 }
 
 .card-icon {
-  font-size: 48px;
-  display: block;
-  margin: 0 auto 10px;
+  font-size: 36px; /* Adjusted icon size */
+  margin-right: 10px; /* Space between icon and text */
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .card-title {
-  text-align: center;
+  font-size: 1rem; /* Adjusted font size for title */
+  margin-bottom: 5px; /* Space below the title */
+}
+
+.card-text p {
+  margin: 0; /* Removes default margin */
+  font-size: 0.875rem; /* Adjusted font size for body text */
 }
 
 .chatbot-container {
@@ -83,4 +55,3 @@
   max-width: 700px;
   margin-top: 20px;
 }
-

@@ -15,60 +15,64 @@ const LandingPage: React.FC = () => {
     <div className="chatbot-wrapper">
       {/* Main Content */}
       <div className="main-content">
-        <Typography variant="h4" gutterBottom>
-          Welcome to the Founder Hub
-        </Typography>
-
         <Box className="card-container">
           {/* Design Validation Card */}
           <Card className="action-card">
-            <CardContent>
+            <CardContent className="card-content">
               <DesignServicesIcon className="card-icon" />
-              <Typography variant="h5" className="card-title">
-                Design validation
-              </Typography>
-              <Typography variant="body2">
-                How can I get my design easily validated?
-              </Typography>
+              <div className="card-text">
+                <Typography variant="h6" className="card-title">
+                  Design validation
+                </Typography>
+                <Typography variant="body2">
+                  How can I get my design easily validated?
+                </Typography>
+              </div>
             </CardContent>
           </Card>
 
           {/* Start a Draft Card */}
           <Card className="action-card">
-            <CardContent>
+            <CardContent className="card-content">
               <EditIcon className="card-icon" />
-              <Typography variant="h5" className="card-title">
-                Start a draft
-              </Typography>
-              <Typography variant="body2">
-                Start a draft of design based on inputs.
-              </Typography>
+              <div className="card-text">
+                <Typography variant="h6" className="card-title">
+                  Start a draft
+                </Typography>
+                <Typography variant="body2">
+                  Start a draft of design based on inputs.
+                </Typography>
+              </div>
             </CardContent>
           </Card>
 
           {/* Secure Coding Card */}
           <Card className="action-card">
-            <CardContent>
+            <CardContent className="card-content">
               <SecurityIcon className="card-icon" />
-              <Typography variant="h5" className="card-title">
-                Secure Coding
-              </Typography>
-              <Typography variant="body2">
-                How can I perform static code analysis in my code?
-              </Typography>
+              <div className="card-text">
+                <Typography variant="h6" className="card-title">
+                  Secure Coding
+                </Typography>
+                <Typography variant="body2">
+                  How can I perform static code analysis in my code?
+                </Typography>
+              </div>
             </CardContent>
           </Card>
 
           {/* Save Costs Card */}
           <Card className="action-card">
-            <CardContent>
+            <CardContent className="card-content">
               <SavingsIcon className="card-icon" />
-              <Typography variant="h5" className="card-title">
-                Save costs
-              </Typography>
-              <Typography variant="body2">
-                What are some ways to reduce costs in my application?
-              </Typography>
+              <div className="card-text">
+                <Typography variant="h6" className="card-title">
+                  Save costs
+                </Typography>
+                <Typography variant="body2">
+                  What are some ways to reduce costs in my application?
+                </Typography>
+              </div>
             </CardContent>
           </Card>
         </Box>
