@@ -37,8 +37,7 @@ function ResponsiveAppBar(props) {
   };
 
   return (
-    <AppBar>
-      <Container maxWidth="xl">
+    <AppBar style={{paddingLeft:"2%",paddingRight:"2%"}}>
         <Toolbar disableGutters>
         <IconButton
             color="inherit"
@@ -166,7 +165,6 @@ function ResponsiveAppBar(props) {
             </Menu>
           </Box>
         </Toolbar>
-      </Container>
     </AppBar>
   );
 }

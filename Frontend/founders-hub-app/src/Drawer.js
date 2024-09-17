@@ -98,6 +98,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
         style: {
           ...closedMixin(theme),
           '& .MuiDrawer-paper': closedMixin(theme),
+          zIndex: 0,
         },
       },
     ],
