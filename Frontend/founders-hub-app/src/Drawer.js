@@ -175,6 +175,7 @@ export default function MiniDrawer() {
                           justifyContent: "center",
                         },
                   ]}
+                  onClick={handleDrawerClose}
                 >
                   <ListItemIcon
                     sx={[

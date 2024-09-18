@@ -27,6 +27,12 @@ export default function StartUpDetails(props:any) {
 
   const handleReset = () => {
     setActiveStep(0);
+    setContactEmail('');
+    setEmployeeNum(0);
+    setFounderName('');
+    setFundStatus('');
+    setStartupName('');
+    setStage('');
   };
 
   const [startupStage, setStage] = React.useState('');

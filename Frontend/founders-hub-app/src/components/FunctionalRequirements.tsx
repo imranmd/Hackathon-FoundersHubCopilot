@@ -58,6 +58,14 @@ export default function FunctionalRequirements(props: any) {
 
   const handleReset = () => {
     setActiveStep(0);
+    setBusinessDomain('');
+    setCloudProvider('');
+    setDeploymentModel('');
+    setEmployeeNum(0);
+    setTransNum(0);
+    setApplicationFeatures([]);
+    setUserInterface([]);
+    setDataManagement([]);
   };
 
   const [businessDomain, setBusinessDomain] = React.useState('');

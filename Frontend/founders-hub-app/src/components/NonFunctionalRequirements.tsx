@@ -28,6 +28,17 @@ export default function NonFunctionalRequirements() {
 
   const handleReset = () => {
     setActiveStep(0);
+    setResponseTime(0);
+    setThroughput(0);
+    setUptime(0);
+    setBudget(0);
+    setAuthentication('');
+    setAuthorization('');
+    setBackup('');
+    setRecovery('');
+    setMonitoring('');
+    setCostEstimation('');
+    setLicensing('');
   };
   const [responseTime, setResponseTime] = React.useState(0);
   const [throughput, setThroughput] = React.useState(0);
