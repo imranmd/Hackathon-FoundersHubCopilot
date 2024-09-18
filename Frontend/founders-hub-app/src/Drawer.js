@@ -112,6 +112,7 @@ const Drawer = styled(MuiDrawer, {
       style: {
         ...closedMixin(theme),
         "& .MuiDrawer-paper": closedMixin(theme),
+        zIndex: -1,
       },
     },
   ],
