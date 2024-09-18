@@ -30,7 +30,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
   };
 
   return (
-    <AppBar style={{ paddingLeft: '2%', paddingRight: '2%' }}>
+    <AppBar style={{ paddingLeft: '1.5%', paddingRight: '2%' }}>
       <Toolbar disableGutters>
         <IconButton
           color="inherit"
