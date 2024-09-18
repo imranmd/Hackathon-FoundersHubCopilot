@@ -14,7 +14,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import SendIcon from '@mui/icons-material/Send';
 
-export default function StartUpDetails() {
+export default function StartUpDetails(props:any) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -229,12 +229,12 @@ export default function StartUpDetails() {
     </Stepper>
     {activeStep === 6 && (
         <Paper square elevation={0} sx={{ p: 3, mt:2 }}>
-        <Typography>Startup details captured successfully!</Typography>
-        <Box>
+        <Typography color='#4BB543' fontWeight={"bold"}>Startup details captured successfully!</Typography>
+        <Box sx={{mt:1}}>
             <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }} >
             Reset
             </Button>
-            <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }} variant='outlined' endIcon={<SendIcon />}>
+            <Button onClick={props.handleNext} sx={{ mt: 1, mr: 1 }} variant='outlined' endIcon={<SendIcon />}>
             Next
             </Button>
         </Box>

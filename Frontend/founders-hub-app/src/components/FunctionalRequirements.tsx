@@ -45,7 +45,7 @@ function getStyles(name: string, list: readonly string[]) {
     };
 }
 
-export default function FunctionalRequirements() {
+export default function FunctionalRequirements(props: any) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -149,12 +149,6 @@ export default function FunctionalRequirements() {
                     sx={{ mt: 1, mr: 1 }}
                 >
                     Continue
-                </Button>
-                <Button
-                    onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
-                >
-                    Back
                 </Button>
                 </Box>
             </StepContent>
@@ -430,14 +424,14 @@ export default function FunctionalRequirements() {
         </StepContent>
         </Step>
     </Stepper>
-    {activeStep === 6 && (
+    {activeStep === 8 && (
         <Paper square elevation={0} sx={{ p: 3, mt:2 }}>
-        <Typography>Startup details captured successfully!</Typography>
-        <Box>
+        <Typography color='#4BB543' fontWeight={"bold"}>Functional requirements captured successfully!</Typography>
+        <Box sx={{mt:1}}>
             <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }} >
             Reset
             </Button>
-            <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }} variant='outlined' endIcon={<SendIcon />}>
+            <Button onClick={props.handleNext} sx={{ mt: 1, mr: 1 }} variant='outlined' endIcon={<SendIcon />}>
             Next
             </Button>
         </Box>
