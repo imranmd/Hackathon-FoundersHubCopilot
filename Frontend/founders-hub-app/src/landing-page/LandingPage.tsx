@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import EditIcon from '@mui/icons-material/Edit';
@@ -10,6 +10,15 @@ import './LandingPage.css';
 const directLineSecret = 'YOUR_DIRECT_LINE_SECRET_HERE'; // Replace with your Direct Line Secret
 
 const LandingPage: React.FC = () => {
+  // Reference to the Chatbot component
+  const chatbotRef = useRef<any>(null);
+
+  // Function to send message to chatbot
+  const sendMessageToChatbot = (message: string) => {
+    if (chatbotRef.current) {
+      chatbotRef.current.sendMessage(message);
+    }
+  };
 
   return (
     <div className="chatbot-wrapper">
@@ -17,7 +26,7 @@ const LandingPage: React.FC = () => {
       <div className="main-content">
         <Box className="card-container">
           {/* Design Validation Card */}
-          <Card className="action-card">
+          <Card className="action-card" onClick={() => sendMessageToChatbot('How can I get my design easily validated?')}>
             <CardContent className="card-content">
               <DesignServicesIcon className="card-icon" />
               <div className="card-text">
@@ -32,7 +41,7 @@ const LandingPage: React.FC = () => {
           </Card>
 
           {/* Start a Draft Card */}
-          <Card className="action-card">
+          <Card className="action-card" onClick={() => sendMessageToChatbot('Can you provide ways to start design a secure and scalable application')}>
             <CardContent className="card-content">
               <EditIcon className="card-icon" />
               <div className="card-text">
@@ -47,7 +56,7 @@ const LandingPage: React.FC = () => {
           </Card>
 
           {/* Secure Coding Card */}
-          <Card className="action-card">
+          <Card className="action-card" onClick={() => sendMessageToChatbot('How can I perform static code analysis in my code?')}>
             <CardContent className="card-content">
               <SecurityIcon className="card-icon" />
               <div className="card-text">
@@ -62,7 +71,7 @@ const LandingPage: React.FC = () => {
           </Card>
 
           {/* Save Costs Card */}
-          <Card className="action-card">
+          <Card className="action-card" onClick={() => sendMessageToChatbot('What are some ways to reduce costs in my application?')}>
             <CardContent className="card-content">
               <SavingsIcon className="card-icon" />
               <div className="card-text">
@@ -78,7 +87,7 @@ const LandingPage: React.FC = () => {
         </Box>
 
         {/* Chatbot Section */}
-        <Chatbot directLineSecret={directLineSecret} />
+        <Chatbot ref={chatbotRef} directLineSecret={directLineSecret} />
       </div>
     </div>
   );
