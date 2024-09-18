@@ -1,7 +1,15 @@
-import React from 'react';
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import StartUpDetails from './StartUpDetails';
+import FunctionalRequirements from './FunctionalRequirements';
 
-const Questionere: React.FC = () => {
-  return <h1 className="main-heading">Questionere Page</h1>;
+export default function Questionere() {
+
+  return (
+    <Box sx={{ flexGrow: 1, pl: "10%", pr: "5%"}}>
+      <h1 className="main-heading">Onboarding to Founders Hub</h1>
+      {/* <StartUpDetails /> */}
+      <FunctionalRequirements />
+    </Box>
+  );
 }
-
-export default Questionere;

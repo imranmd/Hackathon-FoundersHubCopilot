@@ -24,6 +24,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import DesignGen from "./components/DesignGen";
 import DesignOptimization from "./components/DesignOptimization";
 import LearningRoadmap from "./components/LearningRoadmap";
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import Questionere from "./components/Questionere";
 
 const drawerWidth = 240;
 
@@ -37,6 +39,7 @@ const icons = [
   },
   { text: "Learning Roadmap", icon: SchoolIcon, route: "/learning-roadmap" },
   { text: "Design Validation", icon: TaskIcon, route: "/design-validation" },
+  { text: "Questionere", icon: QuestionAnswerIcon, route: "/questionere" },
   // { text: "Cost Optimization", icon: SavingsIcon, route: "/cost-optimization" },
 ];
 const openedMixin = (theme) => ({
@@ -268,6 +271,7 @@ export default function MiniDrawer() {
             <Route path="/design-validation" element={<DesignOptimization />} />
             {/* <Route path="/cost-optimization" element={<DesignOptimization />} /> */}
             <Route path="/learning-roadmap" element={<LearningRoadmap />} />
+            <Route path="/questionere" element={<Questionere />} />
           </Routes>
         </Box>
       </Box>
