@@ -76,7 +76,11 @@ export default function StartUpDetails(props:any) {
             {"Name of your startup"}
             </StepLabel>
             <StepContent>
-            <TextField label="Startup Name" id="startupName" sx={{width: "35%", mt: 2, mb: 1}} value={startupName} onChange={handleStartupNameChange}/>
+            <TextField label="Startup Name" id="startupName" sx={{width: "35%", mt: 2, mb: 1}} value={startupName} onChange={handleStartupNameChange}
+            onKeyDown={(e) => (
+                e.key === "Enter" ? handleNext() : null
+              )}
+            />
             <Box sx={{ mb: 2 }}>
                 <Button
                 variant="contained"
@@ -93,7 +97,11 @@ export default function StartUpDetails(props:any) {
             {"Name of the founder"}
         </StepLabel>
         <StepContent>
-        <TextField label="Founder Name" id="founderName" sx={{width: "35%", mt: 2, mb: 1}} value={founderName} onChange={handleFounderNameChange}/>
+        <TextField label="Founder Name" id="founderName" sx={{width: "35%", mt: 2, mb: 1}} value={founderName} onChange={handleFounderNameChange}
+        onKeyDown={(e) => (
+            e.key === "Enter" ? handleNext() : null
+          )}
+        />
             <Box sx={{ mb: 2 }}>
             <Button
                 variant="contained"
@@ -116,7 +124,11 @@ export default function StartUpDetails(props:any) {
             {"Email contact of the founder"}
         </StepLabel>
         <StepContent>
-        <TextField label="Contact Email" id="contactEmail" sx={{width: "35%", mt: 2, mb: 1}} value={contactEmail} onChange={handleContactEmailChange}/>
+        <TextField label="Contact Email" id="contactEmail" sx={{width: "35%", mt: 2, mb: 1}} value={contactEmail} onChange={handleContactEmailChange}
+        onKeyDown={(e) => (
+            e.key === "Enter" ? handleNext() : null
+          )}
+        />
             <Box sx={{ mb: 2 }}>
             <Button
                 variant="contained"
@@ -214,7 +226,11 @@ export default function StartUpDetails(props:any) {
             {"Number of Employees"}
         </StepLabel>
         <StepContent>
-        <TextField label="Number of Employees" id="EmployeeNum" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={numberOfEmployees} onChange={handleEmployeeNumChange}/>
+        <TextField label="Number of Employees" id="EmployeeNum" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={numberOfEmployees} onChange={handleEmployeeNumChange}
+        onKeyDown={(e) => (
+            e.key === "Enter" ? handleNext() : null
+          )}
+        />
             <Box sx={{ mb: 2 }}>
             <Button
                 variant="contained"

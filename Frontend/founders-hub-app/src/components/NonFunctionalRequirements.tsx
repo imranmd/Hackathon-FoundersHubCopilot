@@ -105,7 +105,11 @@ export default function NonFunctionalRequirements() {
                 {"Expected Response Time (ms)"}
             </StepLabel>
             <StepContent>
-            <TextField label="Response Time (ms)" id="responseTime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={responseTime} onChange={handleResponseTimeChange}/>
+            <TextField label="Response Time (ms)" id="responseTime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={responseTime} onChange={handleResponseTimeChange}
+            onKeyDown={(e) => (
+                e.key === "Enter" ? handleNext() : null
+              )}
+            />
                 <Box sx={{ mb: 2 }}>
                 <Button
                     variant="contained"
@@ -122,7 +126,11 @@ export default function NonFunctionalRequirements() {
                 {"Expected Throughput (requests per second)"}
             </StepLabel>
             <StepContent>
-            <TextField label="Throughput (requests per second)" id="throughput" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={throughput} onChange={handleThroughputChange}/>
+            <TextField label="Throughput (requests per second)" id="throughput" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={throughput} onChange={handleThroughputChange}
+            onKeyDown={(e) => (
+                e.key === "Enter" ? handleNext() : null
+              )}
+            />
                 <Box sx={{ mb: 2 }}>
                 <Button
                     variant="contained"
@@ -216,7 +224,11 @@ export default function NonFunctionalRequirements() {
                 {"Expected Uptime Requirement (%)"}
             </StepLabel>
             <StepContent>
-            <TextField label="Uptime Requirement (%)" id="uptime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={uptime} onChange={handleUptimeChange}/>
+            <TextField label="Uptime Requirement (%)" id="uptime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={uptime} onChange={handleUptimeChange}
+            onKeyDown={(e) => (
+                e.key === "Enter" ? handleNext() : null
+              )}
+            />
                 <Box sx={{ mb: 2 }}>
                 <Button
                     variant="contained"
@@ -345,7 +357,11 @@ export default function NonFunctionalRequirements() {
                 {"Budget ($/month)"}
             </StepLabel>
             <StepContent>
-            <TextField label="Budget ($/month)" id="budget" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={budget} onChange={handleBudgetChange}/>
+            <TextField label="Budget ($/month)" id="budget" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={budget} onChange={handleBudgetChange}
+            onKeyDown={(e) => (
+                e.key === "Enter" ? handleNext() : null
+              )}
+            />
                 <Box sx={{ mb: 2 }}>
                 <Button
                     variant="contained"

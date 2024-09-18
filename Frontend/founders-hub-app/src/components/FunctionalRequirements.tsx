@@ -319,7 +319,11 @@ export default function FunctionalRequirements(props: any) {
             {"Expected Number of Users"}
         </StepLabel>
         <StepContent>
-        <TextField label="Expected Number of Users" id="expectedNumberOfUsers" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={expectedEmployeeNum} onChange={handleEmployeeNumChange}/>
+        <TextField label="Expected Number of Users" id="expectedNumberOfUsers" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={expectedEmployeeNum} onChange={handleEmployeeNumChange}
+        onKeyDown={(e) => (
+            e.key === "Enter" ? handleNext() : null
+          )}
+        />
             <Box sx={{ mb: 2 }}>
             <Button
                 variant="contained"
@@ -342,7 +346,11 @@ export default function FunctionalRequirements(props: any) {
             {"Expected Number of Transactions"}
         </StepLabel>
         <StepContent>
-        <TextField label="Expected Number of Transactions" id="expectedNumberOfTransactions" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={expectedTransNum} onChange={handleTransNumChange}/>
+        <TextField label="Expected Number of Transactions" id="expectedNumberOfTransactions" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={expectedTransNum} onChange={handleTransNumChange}
+        onKeyDown={(e) => (
+            e.key === "Enter" ? handleNext() : null
+          )}
+        />
             <Box sx={{ mb: 2 }}>
             <Button
                 variant="contained"
