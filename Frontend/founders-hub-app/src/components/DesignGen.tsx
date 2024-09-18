@@ -3,18 +3,58 @@ import mermaid from 'mermaid';
 import { Box, Button, Grid2 } from '@mui/material';
 import Chatbot from '../founders-hub-bot/Chatbot';
 
+
 const DIRECT_LINE_SECRET = 'YOUR_DIRECT_LINE_SECRET_HERE';
 
 const DEFAULT_DIAGRAM = `
-architecture-beta
-  group api(cloud)[API]
-  service db(database)[Database] in api
-  service disk1(disk)[Storage] in api
-  service disk2(disk)[Storage] in api
-  service server(server)[Server] in api
-  db:L -- R:server
-  disk1:T -- B:server
-  disk2:T -- B:db
+graph TD
+  subgraph azure[Azure]
+    subgraph backend[Backend]
+      subgraph api[API]
+        service_function[Azure Functions]
+        service_api_gateway[Azure API Management]
+        service_db[Azure SQL Database]
+        service_blob_storage[Azure Blob Storage]
+        service_cosmos_db[Azure Cosmos DB]
+      end
+    end
+
+    subgraph frontend[Frontend]
+      subgraph web[Web App]
+        user_web[User] --> service_web[Azure Static Web Apps]
+        service_web --> service_web_api[Azure API Management]
+        service_web_api --> service_web_db[Azure SQL Database]
+      end
+      subgraph mobile[Mobile App]
+        user_mobile[User] --> service_mobile[Azure Static Web Apps]
+        service_mobile --> service_mobile_api[Azure API Management]
+        service_mobile_api --> service_mobile_db[Azure SQL Database]
+      end
+    end
+
+    subgraph monitoring[Monitoring]
+      service_monitor[Azure Monitor]
+      service_log[Azure Log Analytics]
+    end
+  end
+
+  service_function --> service_api_gateway
+  service_api_gateway --> service_db
+  service_api_gateway --> service_blob_storage
+  service_api_gateway --> service_cosmos_db
+  service_function --> service_monitor
+  service_api_gateway --> service_monitor
+  service_db --> service_monitor
+  service_blob_storage --> service_monitor
+  service_cosmos_db --> service_monitor
+  service_monitor --> service_log
+
+  service_web --> service_monitor
+  service_mobile --> service_monitor
+  service_web_api --> service_monitor
+  service_mobile_api --> service_monitor
+  service_web_api --> service_function
+  service_mobile_api --> service_function
 `;
 
 const DesignGen = ({ initialDiagram = `flowchart TD
@@ -23,7 +63,7 @@ const DesignGen = ({ initialDiagram = `flowchart TD
     C -->|One| D[Laptop]
     C -->|Two| E[iPhone]
     C -->|Three| F[fa:fa-car Car]`}) => {
-  const [diagramState, setDiagramState] = useState(initialDiagram);
+  const [diagramState, setDiagramState] = useState(DEFAULT_DIAGRAM);
   const mermaidRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
