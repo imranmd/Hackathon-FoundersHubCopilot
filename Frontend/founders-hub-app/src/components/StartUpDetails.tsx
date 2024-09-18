@@ -29,9 +29,9 @@ export default function StartUpDetails(props:any) {
     setActiveStep(0);
   };
 
-  const [stage, setStage] = React.useState('');
-  const [fundStatus, setFundStatus] = React.useState('');
-  const [employeeNum, setEmployeeNum] = React.useState(0);
+  const [startupStage, setStage] = React.useState('');
+  const [fundingStatus, setFundStatus] = React.useState('');
+  const [numberOfEmployees, setEmployeeNum] = React.useState(0);
   const [startupName, setStartupName] = React.useState('');
   const [founderName, setFounderName] = React.useState('');
   const [contactEmail, setContactEmail] = React.useState('');
@@ -138,7 +138,7 @@ export default function StartUpDetails(props:any) {
             <Select
             labelId="startupStage"
             id="startupStage"
-            value={stage}
+            value={startupStage}
             label="Startup Stage"
             onChange={handleStageChange}
             >
@@ -175,7 +175,7 @@ export default function StartUpDetails(props:any) {
             <Select
             labelId="fundingStatus"
             id="fundingStatus"
-            value={fundStatus}
+            value={fundingStatus}
             label="Status of the funding"
             onChange={handlefundStatusChange}
             >
@@ -208,7 +208,7 @@ export default function StartUpDetails(props:any) {
             {"Number of Employees"}
         </StepLabel>
         <StepContent>
-        <TextField label="Number of Employees" id="EmployeeNum" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={employeeNum} onChange={handleEmployeeNumChange}/>
+        <TextField label="Number of Employees" id="EmployeeNum" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={numberOfEmployees} onChange={handleEmployeeNumChange}/>
             <Box sx={{ mb: 2 }}>
             <Button
                 variant="contained"
