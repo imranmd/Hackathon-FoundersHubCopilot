@@ -1,12 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import mermaid from 'mermaid';
 import { Box, Button, Grid2, Typography } from '@mui/material';
-import Chatbot from '../../founders-hub-bot/Chatbot';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 
 
-const DIRECT_LINE_SECRET = 'YOUR_DIRECT_LINE_SECRET_HERE';
 
 const DEFAULT_DIAGRAM = `
 graph TD
@@ -59,12 +57,7 @@ graph TD
   service_mobile_api --> service_function
 `;
 
-const DesignGen = ({ initialDiagram = `flowchart TD
-    A[Christmas] -->|Get money| B(Go shopping)
-    B --> C{Let me think}
-    C -->|One| D[Laptop]
-    C -->|Two| E[iPhone]
-    C -->|Three| F[fa:fa-car Car]`}) => {
+const DesignGen = () => {
   const [diagramState, setDiagramState] = useState(DEFAULT_DIAGRAM);
   const mermaidRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
