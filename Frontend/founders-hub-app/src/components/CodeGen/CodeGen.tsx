@@ -1,8 +1,10 @@
-import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Popover, TextField, Typography } from '@mui/material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import ExpandableSection from './ExpandableSection';
+import { azureServicesWithCode } from './azureServices';
+import SendIcon from '@mui/icons-material/Send';
 
 interface CodeSection {
     title: string;
@@ -15,55 +17,118 @@ interface CodeGenProps {
 
 const CodeGen: React.FC<CodeGenProps> = () => {
 
-    const sections = [
-        {
-            title: 'Section 1: Component Definition',
-            code: `
-      import React from 'react';
-      
-      const MyComponent: React.FC = () => {
-        return <div>Hello, World!</div>;
-      };
-      
-      export default MyComponent;
-          `,
-        },
-        {
-            title: 'Section 2: Usage Example',
-            code: `
-      import React from 'react';
-      import MyComponent from './MyComponent';
-      
-      const App: React.FC = () => {
-        return (
-          <div>
-            <MyComponent />
-          </div>
-        );
-      };
-      
-      export default App;
-          `,
-        },
-    ];
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [currentService, setCurrentService] = useState<string>('');
+
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>, sectionTitle: string) => {
+        setAnchorEl(event.currentTarget);
+        setCurrentService(sectionTitle);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+        setCurrentService('');
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
 
     return (
-        <Box sx={{ padding: 2 }}>
+        <Box sx={{ padding: 2, width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h3">Prototype Code Gen tool</Typography>
-            <Box>
-            
-              <Button variant="contained" color="primary" sx={{ mr: 1 }}>
-                Generate Learning Roadmap
-              </Button>
-              <Button variant="contained" color="secondary">
-                Generate Code for prototype
-              </Button>
+                <Typography variant="h3">Prototype Code Gen tool</Typography>
+                <Box>
+
+                    <Button variant="contained" color="primary" sx={{ mr: 1 }}>
+                        Generate Learning Roadmap
+                    </Button>
+                    <Button variant="contained" color="secondary">
+                        Generate Code for prototype
+                    </Button>
+                </Box>
             </Box>
-          </Box>
             <ExpandableSection></ExpandableSection>
-            {sections.map((section, index) => (
+            <Box sx={{ padding: 2, width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
+                {Object.entries(azureServicesWithCode).map(([sectionTitle, services], index) => (
+                    <Box key={index} sx={{ marginBottom: 4 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+                            <Typography variant="h5" sx={{ marginRight: 2 }}>
+                                {sectionTitle}
+                            </Typography>
+                            <Button variant="outlined" size="small" onClick={(event) => handleClick(event, sectionTitle)}>
+                                Modify
+                            </Button>
+                        </Box>
+                        <Popover
+                            id={id}
+                            open={open}
+                            anchorEl={anchorEl}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <Box sx={{ p: 2 }}>
+                                <Typography variant="h6">Modify {currentService}</Typography>
+                                <TextField
+                                    fullWidth
+                                    multiline
+                                    rows={5}
+                                    variant="outlined"
+                                    placeholder={`Provide instructions prompt to modify ${currentService}`}
+                                />
+                                <Button sx={{ marginTop: '5px' }} variant="contained" color="primary" endIcon={<SendIcon />}>
+                                    Submit
+                                </Button>
+                            </Box>
+                        </Popover>
+                        {Array.isArray(services) ? (
+                            services.map((service, subIndex) => (
+                                <Box key={subIndex} sx={{ marginBottom: 4 }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                                        <Typography variant="h6" sx={{ marginRight: 2 }}>
+                                            {service.title}
+                                        </Typography>
+                                        <Button variant="outlined" size="small" onClick={(event) => handleClick(event, service.title)}>
+                                            Modify
+                                        </Button>
+                                    </Box>
+                                    <SyntaxHighlighter language="typescript" style={materialDark}>
+                                        {service.desc}
+                                    </SyntaxHighlighter>
+                                </Box>
+                            ))
+                        ) : (
+                            Object.entries(services).map(([subSectionTitle, subServices], subIndex) => (
+                                <Box key={subIndex} sx={{ marginBottom: 4, ml: 2 }}>
+                                    <Typography variant="h6" sx={{ marginBottom: 2 }}>
+                                        {subSectionTitle}
+                                    </Typography>
+                                    {subServices.map((service, subSubIndex) => (
+                                        <Box key={subSubIndex} sx={{ marginBottom: 4 }}>
+                                            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
+                                                <Typography variant="h6" sx={{ marginRight: 2 }}>
+                                                    {service.title}
+                                                </Typography>
+                                                <Button variant="outlined" size="small" onClick={(event) => handleClick(event, service.title)}>
+                                                    Modify
+                                                </Button>
+                                            </Box>
+                                            <SyntaxHighlighter language="typescript" style={materialDark}>
+                                                {service.desc}
+                                            </SyntaxHighlighter>
+                                        </Box>
+                                    ))}
+                                </Box>
+                            ))
+                        )}
+                    </Box>
+                ))}
+            </Box>
+            {/* {azureServicesWithCode.map((section, index) => (
                 <Box key={index} sx={{ marginBottom: 4 }}>
                     <Typography variant="h6" sx={{ marginBottom: 1 }}>
                         {section.title}
@@ -72,7 +137,7 @@ const CodeGen: React.FC<CodeGenProps> = () => {
                         {section.code}
                     </SyntaxHighlighter>
                 </Box>
-            ))}
+            ))} */}
         </Box>
     );
 };

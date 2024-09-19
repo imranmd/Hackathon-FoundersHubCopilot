@@ -75,3 +75,384 @@ export const azureServices = {
       },
     ],
   };
+
+  export const azureServicesWithCode = {
+    Backend: [
+      {
+        title: 'Azure Functions',
+        desc: `// Sample code for Azure Function
+    module.exports = async function (context, req) {
+      context.log('JavaScript HTTP trigger function processed a request.');
+    
+      const name = req.query.name || (req.body && req.body.name);
+      const responseMessage = name
+        ? "Hello, " + name + ". This HTTP triggered function executed successfully."
+        : "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.";
+    
+      context.res = {
+        // status: 200, /* Defaults to 200 */
+        body: responseMessage,
+      };
+    };`,
+        id: 'service_function',
+      },
+      {
+        title: 'Azure API Management',
+        desc: `// Sample code for Azure API Management (API Gateway)
+    <policies>
+      <inbound>
+        <base />
+        <set-backend-service base-url="https://your-backend-api-url.com" />
+        <rewrite-uri template="/new-path" />
+      </inbound>
+      <backend>
+        <forward-request />
+      </backend>
+      <outbound>
+        <base />
+      </outbound>
+    </policies>`,
+        id: 'service_api_gateway',
+      },
+      {
+        title: 'Azure SQL Database',
+        desc: `// Sample code for connecting to Azure SQL Database using Node.js
+    const sql = require('mssql');
+    
+    const config = {
+      user: 'yourUsername',
+      password: 'yourPassword',
+      server: 'your-server.database.windows.net', 
+      database: 'your-database',
+      options: {
+        encrypt: true,
+        enableArithAbort: true,
+      },
+    };
+    
+    async function connectToDatabase() {
+      try {
+        await sql.connect(config);
+        const result = await sql.query('SELECT * FROM your_table');
+        console.log(result);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    
+    connectToDatabase();`,
+        id: 'service_db',
+      },
+      {
+        title: 'Azure Blob Storage',
+        desc: `// Sample code for uploading a file to Azure Blob Storage using Node.js
+    const { BlobServiceClient } = require('@azure/storage-blob');
+    
+    const AZURE_STORAGE_CONNECTION_STRING = 'your_connection_string';
+    const containerName = 'your-container-name';
+    const blobName = 'your-blob-name';
+    const localFilePath = './path-to-your-file';
+    
+    async function uploadFile() {
+      const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_STORAGE_CONNECTION_STRING);
+      const containerClient = blobServiceClient.getContainerClient(containerName);
+      const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+      
+      const uploadBlobResponse = await blockBlobClient.uploadFile(localFilePath);
+      console.log('Upload block blob successfully', uploadBlobResponse.requestId);
+    }
+    
+    uploadFile();`,
+        id: 'service_blob_storage',
+      },
+      {
+        title: 'Azure Cosmos DB',
+        desc: `// Sample code for querying Azure Cosmos DB using Node.js
+    const { CosmosClient } = require('@azure/cosmos');
+    
+    const endpoint = 'your-cosmosdb-endpoint';
+    const key = 'your-cosmosdb-key';
+    const client = new CosmosClient({ endpoint, key });
+    const databaseId = 'your-database';
+    const containerId = 'your-container';
+    
+    async function queryItems() {
+      const { database } = await client.databases.createIfNotExists({ id: databaseId });
+      const { container } = await database.containers.createIfNotExists({ id: containerId });
+    
+      const querySpec = {
+        query: 'SELECT * FROM c WHERE c.name = @name',
+        parameters: [
+          { name: '@name', value: 'example' },
+        ],
+      };
+    
+      const { resources: items } = await container.items.query(querySpec).fetchAll();
+      items.forEach(item => {
+        console.log(\`\${item.id} - \${item.name}\`);
+      });
+    }
+    
+    queryItems();`,
+        id: 'service_cosmos_db',
+      },
+    ],
+    Frontend: {
+      WebApp: [
+        {
+          title: 'Azure Static Web Apps',
+          desc: `// Sample configuration for deploying a Static Web App on Azure
+      // Create an 'azure-static-web-apps-config.json' in your repository
+      {
+        "routes": [
+          {
+            "route": "/api/*",
+            "methods": ["GET", "POST"],
+            "allowedRoles": ["anonymous"]
+          },
+          {
+            "route": "/*",
+            "serve": "/index.html",
+            "statusCode": 200
+          }
+        ],
+        "responseOverrides": {
+          "404": {
+            "rewrite": "/index.html"
+          }
+        }
+      }
+      // Example GitHub Actions workflow for automatic deployment
+      name: Azure Static Web Apps CI/CD
+      
+      on:
+        push:
+          branches:
+            - main
+      
+      jobs:
+        build_and_deploy_job:
+          runs-on: ubuntu-latest
+          steps:
+          - uses: actions/checkout@v2
+          - name: Build And Deploy
+            uses: Azure/static-web-apps-deploy@v1
+            with:
+              azure_static_web_apps_api_token: \${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+              repo_token: \${{ secrets.GITHUB_TOKEN }}
+              action: "upload"`,
+          id: 'service_web',
+        },
+        {
+          title: 'Azure API Management',
+          desc: `// Sample code for managing an API in Azure API Management
+      // Example setup for an API endpoint in Azure API Management
+      <policies>
+        <inbound>
+          <base />
+          <rate-limit calls="5" renewal-period="60" />
+          <set-backend-service base-url="https://your-api-url.com" />
+        </inbound>
+        <backend>
+          <forward-request />
+        </backend>
+        <outbound>
+          <base />
+        </outbound>
+      </policies>
+      // You can import APIs using an OpenAPI definition (Swagger) via the Azure Portal or Azure CLI
+      az apim api import --resource-group MyResourceGroup --service-name MyApiManagement --path /api --specification-url https://my-api-specification-url/swagger.json`,
+          id: 'service_web_api',
+        },
+        {
+          title: 'Azure SQL Database',
+          desc: `// Sample code for connecting to Azure SQL Database using Node.js
+      const sql = require('mssql');
+      
+      const config = {
+        user: 'yourUsername',
+        password: 'yourPassword',
+        server: 'your-server.database.windows.net', 
+        database: 'your-database',
+        options: {
+          encrypt: true,
+          enableArithAbort: true,
+        },
+      };
+      
+      async function connectToDatabase() {
+        try {
+          await sql.connect(config);
+          const result = await sql.query('SELECT * FROM your_table');
+          console.log(result);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      
+      connectToDatabase();`,
+          id: 'service_web_db',
+        },
+      ],
+      MobileApp: [
+        {
+          title: 'Azure Static Web Apps',
+          desc: `// Sample configuration for deploying a Static Web App on Azure
+      // Create an 'azure-static-web-apps-config.json' in your repository
+      {
+        "routes": [
+          {
+            "route": "/api/*",
+            "methods": ["GET", "POST"],
+            "allowedRoles": ["anonymous"]
+          },
+          {
+            "route": "/*",
+            "serve": "/index.html",
+            "statusCode": 200
+          }
+        ],
+        "responseOverrides": {
+          "404": {
+            "rewrite": "/index.html"
+          }
+        }
+      }
+      // Example GitHub Actions workflow for automatic deployment
+      name: Azure Static Web Apps CI/CD
+      
+      on:
+        push:
+          branches:
+            - main
+      
+      jobs:
+        build_and_deploy_job:
+          runs-on: ubuntu-latest
+          steps:
+          - uses: actions/checkout@v2
+          - name: Build And Deploy
+            uses: Azure/static-web-apps-deploy@v1
+            with:
+              azure_static_web_apps_api_token: \${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+              repo_token: \${{ secrets.GITHUB_TOKEN }}
+              action: "upload"`,
+          id: 'service_web',
+        },
+        {
+          title: 'Azure API Management',
+          desc: `// Sample code for managing an API in Azure API Management
+      // Example setup for an API endpoint in Azure API Management
+      <policies>
+        <inbound>
+          <base />
+          <rate-limit calls="5" renewal-period="60" />
+          <set-backend-service base-url="https://your-api-url.com" />
+        </inbound>
+        <backend>
+          <forward-request />
+        </backend>
+        <outbound>
+          <base />
+        </outbound>
+      </policies>
+      // You can import APIs using an OpenAPI definition (Swagger) via the Azure Portal or Azure CLI
+      az apim api import --resource-group MyResourceGroup --service-name MyApiManagement --path /api --specification-url https://my-api-specification-url/swagger.json`,
+          id: 'service_web_api',
+        },
+        {
+          title: 'Azure SQL Database',
+          desc: `// Sample code for connecting to Azure SQL Database using Node.js
+      const sql = require('mssql');
+      
+      const config = {
+        user: 'yourUsername',
+        password: 'yourPassword',
+        server: 'your-server.database.windows.net', 
+        database: 'your-database',
+        options: {
+          encrypt: true,
+          enableArithAbort: true,
+        },
+      };
+      
+      async function connectToDatabase() {
+        try {
+          await sql.connect(config);
+          const result = await sql.query('SELECT * FROM your_table');
+          console.log(result);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      
+      connectToDatabase();`,
+          id: 'service_web_db',
+        },
+      ],
+    },
+    Monitoring: [
+      {
+        title: 'Azure Monitor',
+        desc: `// Sample code for sending custom metrics to Azure Monitor using the Azure Monitor SDK
+    const { DefaultAzureCredential } = require('@azure/identity');
+    const { MetricsQueryClient } = require('@azure/monitor-query');
+    
+    async function queryMetrics() {
+      const credential = new DefaultAzureCredential();
+      const client = new MetricsQueryClient(credential);
+    
+      const metricsResponse = await client.queryMetrics(
+        "resource-id",
+        {
+          metricNames: ["Requests"],
+          timespan: { duration: "PT1H" }, // last 1 hour
+        }
+      );
+    
+      const metrics = metricsResponse.metrics;
+      metrics.forEach(metric => {
+        console.log(\`Metric: \${metric.name}\`);
+        metric.timeseries.forEach(series => {
+          console.log("Data Points:", series.data);
+        });
+      });
+    }
+    
+    queryMetrics();`,
+        id: 'service_monitor',
+      },
+      {
+        title: 'Azure Log Analytics',
+        desc: `// Sample code for querying Azure Log Analytics using the Azure SDK for JavaScript
+    const { DefaultAzureCredential } = require('@azure/identity');
+    const { LogsQueryClient } = require('@azure/monitor-query');
+    
+    async function queryLogs() {
+      const credential = new DefaultAzureCredential();
+      const client = new LogsQueryClient(credential);
+    
+      const kustoQuery = \`
+        AzureDiagnostics
+        | where ResourceType == "NETWORK"
+        | summarize count() by bin(TimeGenerated, 1h)
+      \`;
+    
+      const queryResponse = await client.queryWorkspace(
+        "workspace-id",
+        kustoQuery,
+        { timespan: { duration: "P1D" } } // Last 1 day
+      );
+    
+      if (queryResponse.status === 'Success') {
+        console.log("Logs:", queryResponse.tables[0].rows);
+      } else {
+        console.error("Failed to retrieve logs", queryResponse.error);
+      }
+    }
+    
+    queryLogs();`,
+        id: 'service_log',
+      },
+    ],
+  };

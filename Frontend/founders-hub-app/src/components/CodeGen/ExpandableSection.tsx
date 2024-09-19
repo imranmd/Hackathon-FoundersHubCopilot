@@ -8,7 +8,7 @@ const ExpandableSection: React.FC = () => {
     <Box sx={{ padding: 2 }}>
         <Typography variant="h6">Summary of Design Components</Typography>
       {Object.entries(azureServices).map(([section, services]) => (
-        <Accordion key={section}>
+        <Accordion key={section} defaultExpanded>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="h6">{section}</Typography>
           </AccordionSummary>
@@ -22,7 +22,7 @@ const ExpandableSection: React.FC = () => {
               ))
             ) : (
               Object.entries(services).map(([subSection, subServices]) => (
-                <Accordion key={subSection}>
+                <Accordion key={subSection} defaultExpanded>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant="subtitle1">{subSection}</Typography>
                   </AccordionSummary>
