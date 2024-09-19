@@ -10,6 +10,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import avatar from './avatar.jpeg';
+import { Link } from 'react-router-dom';
 
 // Define prop types
 interface ResponsiveAppBarProps {
@@ -18,7 +19,7 @@ interface ResponsiveAppBarProps {
   title: string;
 }
 
-const settings: string[] = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings: string[] = ['Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -86,6 +87,9 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
           >
+           <MenuItem key={"profile"} onClick={handleCloseUserMenu} component={Link} to={"/mydetails"}>
+                <Typography sx={{ textAlign: 'center' }}>{"Profile"}</Typography>
+              </MenuItem> 
             {settings.map((setting) => (
               <MenuItem key={setting} onClick={handleCloseUserMenu}>
                 <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>

@@ -30,6 +30,7 @@ import CodeGen from "./components/CodeGen/CodeGen";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
 import { useLoading } from './components/Loader/LoadingContext';
 import Loader from './components/Loader/Loader';
+import StartUpDetails from "./components/StartUpDetails";
 
 const drawerWidth = 240;
 
@@ -301,6 +302,7 @@ export default function MiniDrawer() {
               <Route path="/learning-roadmap" element={<LearningRoadmap />} />
               <Route path="/questionere" element={<Questionere />} />
               <Route path="/codegen" element={<CodeGen />} />
+              <Route path="/mydetails" element={<StartUpDetails />} />
             </Routes>
           </Box>
         </Box>
