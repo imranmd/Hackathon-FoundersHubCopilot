@@ -5,7 +5,8 @@ import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import ExpandableSection from './ExpandableSection';
 import { azureServicesWithCode } from './azureServices';
 import SendIcon from '@mui/icons-material/Send';
-
+import { useNavigate } from 'react-router-dom';
+import { useLoading } from '../Loader/LoadingContext';
 interface CodeSection {
     title: string;
     code: string;
@@ -19,7 +20,8 @@ const CodeGen: React.FC<CodeGenProps> = () => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [currentService, setCurrentService] = useState<string>('');
-
+    const navigate = useNavigate();
+    const { setLoading } = useLoading();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>, sectionTitle: string) => {
         setAnchorEl(event.currentTarget);
@@ -31,6 +33,13 @@ const CodeGen: React.FC<CodeGenProps> = () => {
         setCurrentService('');
     };
 
+    const handleNavigate = (path: string, loadingMessage?:string) => {
+        setLoading(true, loadingMessage);
+        setTimeout(() => {
+          navigate(path);
+          setLoading(false);
+        }, 3000); // 3 seconds timeout
+      };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -41,8 +50,8 @@ const CodeGen: React.FC<CodeGenProps> = () => {
                 <Typography variant="h3">Prototype Code Gen tool</Typography>
                 <Box>
 
-                    <Button variant="contained" color="primary" sx={{ mr: 1 }}>
-                        Generate Learning Roadmap
+                    <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/arch-design-tool', 'Regenerating the design' )}>
+                        Re-Generate Design
                     </Button>
                     <Button variant="contained" color="secondary">
                         Generate Code for prototype
