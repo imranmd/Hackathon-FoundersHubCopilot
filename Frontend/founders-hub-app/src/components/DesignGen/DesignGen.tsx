@@ -3,6 +3,7 @@ import mermaid from 'mermaid';
 import { Box, Button, Grid2, Typography } from '@mui/material';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
+import StartupSummary from '../StartupSummary/StartupSummary';
 
 
 
@@ -108,6 +109,17 @@ const DesignGen = () => {
 
   return (
     <Grid2 container spacing={2} sx={{ height: '89vh', display: 'flex' }}>
+      <Grid2 size={{ xs: 9 }} ><Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Typography variant="h4">Architecture Design tool</Typography>
+        <Box>
+          <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/learning-roadmap')}>
+            Generate Learning Roadmap
+          </Button>
+          <Button variant="contained" color="secondary" onClick={() => handleNavigate('/codegen')}>
+            Generate Code for prototype
+          </Button>
+        </Box>
+      </Box></Grid2>
       <Grid2 size={{ xs: 6, md: 9 }} sx={{ height: '100%' }} >
         <Box
           sx={{
@@ -118,17 +130,7 @@ const DesignGen = () => {
             overflow: 'auto',
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="h6">Architecture Design tool</Typography>
-            <Box>
-              <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/learning-roadmap')}>
-                Generate Learning Roadmap
-              </Button>
-              <Button variant="contained" color="secondary" onClick={() => handleNavigate('/codegen')}>
-                Generate Code for prototype
-              </Button>
-            </Box>
-          </Box>
+
           <div id="mermaid-diagram" ref={mermaidRef} />
         </Box>
       </Grid2>
@@ -167,7 +169,18 @@ const DesignGen = () => {
           </Box>
         </Box>
       </Grid2>
+      <StartupSummary
+        name="Tech Innovators"
+        industry="Healthcare"
+        stage="Seed"
+        description="A startup revolutionizing the healthcare industry with AI-driven diagnostics."
+        founderNames={['John Doe', 'Jane Smith']}
+        fundingStatus="Pre-seed"
+        goals={['Secure funding', 'Launch MVP', 'Expand team']}
+        technologies={['React', 'Node.js', 'Azure', 'AI']}
+      />
     </Grid2>
+
   );
 };
 
