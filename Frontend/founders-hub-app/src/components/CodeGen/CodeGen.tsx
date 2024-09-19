@@ -7,6 +7,8 @@ import { azureServicesWithCode } from './azureServices';
 import SendIcon from '@mui/icons-material/Send';
 import useAppBarTitle from '../useAppBarTitle';
 
+import { useNavigate } from 'react-router-dom';
+import { useLoading } from '../Loader/LoadingContext';
 interface CodeSection {
     title: string;
     code: string;
@@ -23,17 +25,36 @@ const CodeGen: React.FC<CodeGenProps> = () => {
 
     useAppBarTitle("Code Generation");
 
+    const navigate = useNavigate();
+    const { setLoading } = useLoading();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>, sectionTitle: string) => {
         setAnchorEl(event.currentTarget);
         setCurrentService(sectionTitle);
     };
 
+    const handleSubmit = () => {
+        setLoading(true, 'Regenerating the prototype code');
+        setTimeout(() => {
+            handleClose();
+          setLoading(false);
+        }, 3000); // 3 seconds timeout
+    };
+
+    
+
     const handleClose = () => {
         setAnchorEl(null);
         setCurrentService('');
     };
 
+    const handleNavigate = (path: string, loadingMessage?:string) => {
+        setLoading(true, loadingMessage);
+        setTimeout(() => {
+          navigate(path);
+          setLoading(false);
+        }, 3000); // 3 seconds timeout
+      };
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
@@ -44,8 +65,8 @@ const CodeGen: React.FC<CodeGenProps> = () => {
                 <Typography variant="h3">Prototype Code Gen tool</Typography>
                 <Box>
 
-                    <Button variant="contained" color="primary" sx={{ mr: 1 }}>
-                        Generate Learning Roadmap
+                    <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/arch-design-tool', 'Regenerating the design' )}>
+                        Re-Generate Design
                     </Button>
                     <Button variant="contained" color="secondary">
                         Generate Code for prototype
@@ -83,7 +104,7 @@ const CodeGen: React.FC<CodeGenProps> = () => {
                                     variant="outlined"
                                     placeholder={`Provide instructions prompt to modify ${currentService}`}
                                 />
-                                <Button sx={{ marginTop: '5px' }} variant="contained" color="primary" endIcon={<SendIcon />}>
+                                <Button sx={{ marginTop: '5px' }} variant="contained" color="primary" endIcon={<SendIcon />} onClick={(event) => handleSubmit()}>
                                     Submit
                                 </Button>
                             </Box>

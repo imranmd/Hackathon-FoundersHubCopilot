@@ -1,33 +1,35 @@
-import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import DesignServicesIcon from '@mui/icons-material/DesignServices';
-import SchoolIcon from '@mui/icons-material/School';
-import ExploreIcon from '@mui/icons-material/Explore';
-import TaskIcon from '@mui/icons-material/Task';
-import LogoutIcon from '@mui/icons-material/Logout';
-import HelpIcon from '@mui/icons-material/Help';
-import ResponsiveAppBar from './AppBar';
-import LandingPage from './landing-page/LandingPage';
+import * as React from "react";
+import { styled, useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MuiDrawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import DesignServicesIcon from "@mui/icons-material/DesignServices";
+import SchoolIcon from "@mui/icons-material/School";
+import ExploreIcon from "@mui/icons-material/Explore";
+import TaskIcon from "@mui/icons-material/Task";
+import LogoutIcon from "@mui/icons-material/Logout";
+import HelpIcon from "@mui/icons-material/Help";
+import ResponsiveAppBar from "./AppBar";
+import LandingPage from "./landing-page/LandingPage";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import DesignGen from "./components/DesignGen/DesignGen";
 import DesignOptimization from "./components/DesignOptimization";
 import LearningRoadmap from "./components/LearningRoadmap";
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import Questionere from "./components/Questionere";
-import CodeGen from './components/CodeGen/CodeGen';
-import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import CodeGen from "./components/CodeGen/CodeGen";
+import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
+import { useLoading } from './components/Loader/LoadingContext';
+import Loader from './components/Loader/Loader';
 
 const drawerWidth = 240;
 
@@ -128,6 +130,7 @@ const Drawer = styled(MuiDrawer, {
 export default function MiniDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const { loading, loadingMessage } = useLoading();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -152,150 +155,156 @@ export default function MiniDrawer() {
   }, []);
 
   return (
-    <Router>
-      <Box sx={{ display: "flex" }}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          open={open}
-          handleDrawerOpen={handleDrawerOpen}
-          title={title}
-        />
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-            <IconButton
-              onClick={handleDrawerClose}
-              style={!open ? { display: "none" } : {}}
-            >
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            {icons.map((obj, index) => (
-              <ListItem key={index} disablePadding sx={{ display: "block" }}>
-                <ListItemButton 
-                  component={Link}
-                  to={obj.route}
-                  sx={[
-                    {
-                      minHeight: 48,
-                      px: 2.5,
-                    },
-                    open
-                      ? {
-                          justifyContent: "initial",
-                        }
-                      : {
-                          justifyContent: "center",
-                        },
-                  ]}
-                  onClick={handleDrawerClose}
-                >
-                  <ListItemIcon
+
+      <Router>
+        <Box sx={{ display: "flex" }}>
+          <CssBaseline />
+          <AppBar
+            position="fixed"
+            open={open}
+            handleDrawerOpen={handleDrawerOpen}
+            title={title}
+          />
+          <Drawer variant="permanent" open={open}>
+            <DrawerHeader>
+              <IconButton
+                onClick={handleDrawerClose}
+                style={!open ? { display: "none" } : {}}
+              >
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </DrawerHeader>
+            <Divider />
+            <List>
+              {icons.map((obj, index) => (
+                <ListItem key={index} disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
+                    component={Link}
+                    to={obj.route}
                     sx={[
                       {
-                        minWidth: 0,
-                        justifyContent: "center",
+                        minHeight: 48,
+                        px: 2.5,
                       },
                       open
                         ? {
-                            mr: 3,
+                            justifyContent: "initial",
                           }
                         : {
-                            mr: "auto",
+                            justifyContent: "center",
                           },
                     ]}
+                    onClick={handleDrawerClose}
                   >
-                    {<obj.icon />}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={obj.text}
-                    sx={[
-                      open
-                        ? {
-                            opacity: 1,
-                          }
-                        : {
-                            opacity: 0,
-                          },
-                    ]}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["Logout", "Help"].map((text, index) => (
-              <ListItem key={text} disablePadding sx={{ display: "block" }}>
-                <ListItemButton
-                  sx={[
-                    {
-                      minHeight: 48,
-                      px: 2.5,
-                    },
-                    open
-                      ? {
-                          justifyContent: "initial",
-                        }
-                      : {
+                    <ListItemIcon
+                      sx={[
+                        {
+                          minWidth: 0,
                           justifyContent: "center",
                         },
-                  ]}
-                >
-                  <ListItemIcon
+                        open
+                          ? {
+                              mr: 3,
+                            }
+                          : {
+                              mr: "auto",
+                            },
+                      ]}
+                    >
+                      {<obj.icon />}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={obj.text}
+                      sx={[
+                        open
+                          ? {
+                              opacity: 1,
+                            }
+                          : {
+                              opacity: 0,
+                            },
+                      ]}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+            <List>
+              {["Logout", "Help"].map((text, index) => (
+                <ListItem key={text} disablePadding sx={{ display: "block" }}>
+                  <ListItemButton
                     sx={[
                       {
-                        minWidth: 0,
-                        justifyContent: "center",
+                        minHeight: 48,
+                        px: 2.5,
                       },
                       open
                         ? {
-                            mr: 3,
+                            justifyContent: "initial",
                           }
                         : {
-                            mr: "auto",
+                            justifyContent: "center",
                           },
                     ]}
                   >
-                    {index % 2 === 0 ? <LogoutIcon /> : <HelpIcon />}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={text}
-                    sx={[
-                      open
-                        ? {
-                            opacity: 1,
-                          }
-                        : {
-                            opacity: 0,
-                          },
-                    ]}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <DrawerHeader />
-          <Routes>
-            <Route path="/" element={<Questionere />} />
-            <Route path="/explore" element={<LandingPage />} />
-            <Route path="/arch-design-tool" element={<DesignGen />} />
-            <Route path="/design-validation" element={<DesignOptimization />} />
-            {/* <Route path="/cost-optimization" element={<DesignOptimization />} /> */}
-            <Route path="/learning-roadmap" element={<LearningRoadmap />} />
-            <Route path="/questionere" element={<Questionere />} />
-            <Route path="/codegen" element={<CodeGen />} />
-          </Routes>
+                    <ListItemIcon
+                      sx={[
+                        {
+                          minWidth: 0,
+                          justifyContent: "center",
+                        },
+                        open
+                          ? {
+                              mr: 3,
+                            }
+                          : {
+                              mr: "auto",
+                            },
+                      ]}
+                    >
+                      {index % 2 === 0 ? <LogoutIcon /> : <HelpIcon />}
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={text}
+                      sx={[
+                        open
+                          ? {
+                              opacity: 1,
+                            }
+                          : {
+                              opacity: 0,
+                            },
+                      ]}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Drawer>
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <DrawerHeader />
+            {loading && <Loader message={loadingMessage}/>}
+            <Routes>
+              <Route path="/" element={<Questionere />} />
+              <Route path="/explore" element={<LandingPage />} />
+              <Route path="/arch-design-tool" element={<DesignGen />} />
+              <Route
+                path="/design-validation"
+                element={<DesignOptimization />}
+              />
+              {/* <Route path="/cost-optimization" element={<DesignOptimization />} /> */}
+              <Route path="/learning-roadmap" element={<LearningRoadmap />} />
+              <Route path="/questionere" element={<Questionere />} />
+              <Route path="/codegen" element={<CodeGen />} />
+            </Routes>
+          </Box>
         </Box>
-      </Box>
-    </Router>
+      </Router>
+
   );
 }

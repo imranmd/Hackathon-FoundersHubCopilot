@@ -5,6 +5,7 @@ import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import StartupSummary from '../StartupSummary/StartupSummary';
 import useAppBarTitle from '../useAppBarTitle';
+import { useLoading } from '../Loader/LoadingContext';
 
 
 
@@ -63,6 +64,7 @@ const DesignGen = () => {
   const [diagramState, setDiagramState] = useState(DEFAULT_DIAGRAM);
   const mermaidRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { setLoading } = useLoading();
   useEffect(() => {
     mermaid.initialize({ startOnLoad: true });
     const renderDiagram = async () => {
@@ -86,8 +88,12 @@ const DesignGen = () => {
 
 
 
-  const handleNavigate = (path: string) => {
-    navigate(path);
+  const handleNavigate = (path: string, loadingMessage?:string) => {
+    setLoading(true, loadingMessage);
+    setTimeout(() => {
+      navigate(path);
+      setLoading(false);
+    }, 3000); // 3 seconds timeout
   };
 
   const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,10 +121,10 @@ const DesignGen = () => {
       <Grid2 size={{ xs: 9 }} ><Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
         {/* <Typography variant="h4">Architecture Design tool</Typography> */}
         <Box>
-          <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/learning-roadmap')}>
+          <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/learning-roadmap' , 'Generating learning road map')}>
             Generate Learning Roadmap
           </Button>
-          <Button variant="contained" color="secondary" onClick={() => handleNavigate('/codegen')}>
+          <Button variant="contained" color="secondary" onClick={() => handleNavigate('/codegen', 'Generating code for prototype')}>
             Generate Code for prototype
           </Button>
         </Box>
@@ -150,7 +156,6 @@ const DesignGen = () => {
         >
           <Box sx={{ padding: 2, overflow: 'auto' }}>
             <Sidebar></Sidebar>
-            {/* <Chatbot directLineSecret={DIRECT_LINE_SECRET} /> */}
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
             <Button variant="contained" component="label">

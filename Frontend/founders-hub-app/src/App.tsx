@@ -1,12 +1,15 @@
 import './App.css';
 import React from 'react';
 import MiniDrawer from './Drawer';
+import { LoadingProvider } from './components/Loader/LoadingContext';
 
 const App: React.FC = () => {
   return (
-    <div className="app">
-      <MiniDrawer />
-    </div>
+    <LoadingProvider>
+      <div className="app">
+        <MiniDrawer />
+      </div>
+    </LoadingProvider>
   );
 };
 
