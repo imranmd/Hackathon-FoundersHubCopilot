@@ -42,6 +42,7 @@ const icons = [
   { text: "Questionere", icon: QuestionAnswerIcon, route: "/questionere" },
   // { text: "Cost Optimization", icon: SavingsIcon, route: "/cost-optimization" },
 ];
+
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -115,7 +116,7 @@ const Drawer = styled(MuiDrawer, {
       style: {
         ...closedMixin(theme),
         "& .MuiDrawer-paper": closedMixin(theme),
-        zIndex: -1,
+        zIndex: 0,
       },
     },
   ],
