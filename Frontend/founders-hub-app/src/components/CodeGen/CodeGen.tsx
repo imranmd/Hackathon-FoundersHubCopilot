@@ -28,6 +28,16 @@ const CodeGen: React.FC<CodeGenProps> = () => {
         setCurrentService(sectionTitle);
     };
 
+    const handleSubmit = () => {
+        setLoading(true, 'Regenerating the prototype code');
+        setTimeout(() => {
+            handleClose();
+          setLoading(false);
+        }, 3000); // 3 seconds timeout
+    };
+
+    
+
     const handleClose = () => {
         setAnchorEl(null);
         setCurrentService('');
@@ -89,7 +99,7 @@ const CodeGen: React.FC<CodeGenProps> = () => {
                                     variant="outlined"
                                     placeholder={`Provide instructions prompt to modify ${currentService}`}
                                 />
-                                <Button sx={{ marginTop: '5px' }} variant="contained" color="primary" endIcon={<SendIcon />}>
+                                <Button sx={{ marginTop: '5px' }} variant="contained" color="primary" endIcon={<SendIcon />} onClick={(event) => handleSubmit()}>
                                     Submit
                                 </Button>
                             </Box>
