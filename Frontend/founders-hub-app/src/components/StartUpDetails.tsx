@@ -4,6 +4,7 @@ import { Box, Typography, Accordion, AccordionSummary, AccordionDetails, Button 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AutoFixNormalIcon from '@mui/icons-material/AutoFixNormal';
 import { mockStartUpData } from './startUpMock';
+import { Link } from 'react-router-dom';
 
 const StartUpDetails: React.FC = () => {
   useAppBarTitle("My Startup");
@@ -11,7 +12,7 @@ const StartUpDetails: React.FC = () => {
     <Box sx={{ padding: 5, width:"100%" }}>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 5 }}>
                 <Typography variant="h4" sx={{mr:5}}>Details of my Startup</Typography>
-                <Box>
+                <Box component={Link} to={"/questionere"}>
                     <Button variant="contained" color="warning" sx={{ mr: 1 }} startIcon={<AutoFixNormalIcon />} >
                         Modify
                     </Button>
