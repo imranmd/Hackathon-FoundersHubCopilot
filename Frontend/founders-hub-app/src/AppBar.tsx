@@ -15,6 +15,7 @@ import avatar from './avatar.jpeg';
 interface ResponsiveAppBarProps {
   handleDrawerOpen: () => void;
   open: boolean;
+  title: string;
 }
 
 const settings: string[] = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -41,7 +42,21 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = (props) => {
         >
           <MenuIcon />
         </IconButton>
-        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }} />
+        <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'flex-start' }}>
+        <Typography
+            variant="h4"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              color: 'inherit',
+              textDecoration: 'none',
+              display: { xs: 'none', md: 'flex' },
+            }}
+          >
+            {props.title}
+          </Typography>
+        </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'flex-end' }}>
           <Typography
             variant="h5"

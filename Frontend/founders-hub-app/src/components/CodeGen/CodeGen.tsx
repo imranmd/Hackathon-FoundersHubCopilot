@@ -5,6 +5,7 @@ import { materialDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import ExpandableSection from './ExpandableSection';
 import { azureServicesWithCode } from './azureServices';
 import SendIcon from '@mui/icons-material/Send';
+import useAppBarTitle from '../useAppBarTitle';
 
 interface CodeSection {
     title: string;
@@ -19,6 +20,8 @@ const CodeGen: React.FC<CodeGenProps> = () => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [currentService, setCurrentService] = useState<string>('');
+
+    useAppBarTitle("Code Generation");
 
 
     const handleClick = (event: React.MouseEvent<HTMLElement>, sectionTitle: string) => {

@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Chatbot from '../founders-hub-bot/Chatbot';
+import useAppBarTitle from './useAppBarTitle';
 
 
 const DIRECT_LINE_SECRET = 'YOUR_DIRECT_LINE_SECRET_HERE';
@@ -228,6 +229,8 @@ const DEFAULT_ROADMAP = [
 const LearningRoadmap = () => {
   const [roadmapState, setRoadmapState] = useState(DEFAULT_ROADMAP);
 
+  useAppBarTitle('Learning Roadmap');
+
   const handleClearScreen = useCallback(() => {
     setRoadmapState(DEFAULT_ROADMAP);
   }, []);
@@ -268,7 +271,7 @@ const LearningRoadmap = () => {
     <Grid2 container spacing={2} sx={{ height: '89vh', display: 'flex' }}>
       <Grid2 size={{ xs: 6, md: 9 }} sx={{ height: '100%' }} >
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-          <Typography variant="h4">Personalized Learning Roadmap for your startup</Typography>
+          <Typography variant="h5">Personalized Learning Roadmap for your startup</Typography>
 
         </Box>
         <Box

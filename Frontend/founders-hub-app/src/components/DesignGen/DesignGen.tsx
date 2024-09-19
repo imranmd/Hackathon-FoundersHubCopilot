@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import mermaid from 'mermaid';
-import { Box, Button, Grid2, Typography } from '@mui/material';
+import { Box, Button, Grid2 } from '@mui/material';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import StartupSummary from '../StartupSummary/StartupSummary';
+import useAppBarTitle from '../useAppBarTitle';
 
 
 
@@ -107,10 +108,12 @@ const DesignGen = () => {
     setDiagramState(DEFAULT_DIAGRAM);
   }, []);
 
+  useAppBarTitle("Architecture Design Tool");
+
   return (
     <Grid2 container spacing={2} sx={{ height: '89vh', display: 'flex' }}>
-      <Grid2 size={{ xs: 9 }} ><Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h4">Architecture Design tool</Typography>
+      <Grid2 size={{ xs: 9 }} ><Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+        {/* <Typography variant="h4">Architecture Design tool</Typography> */}
         <Box>
           <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/learning-roadmap')}>
             Generate Learning Roadmap

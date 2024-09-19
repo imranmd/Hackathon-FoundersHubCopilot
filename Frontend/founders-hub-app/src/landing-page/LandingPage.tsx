@@ -6,12 +6,15 @@ import SecurityIcon from '@mui/icons-material/Security';
 import SavingsIcon from '@mui/icons-material/Savings';
 import Chatbot from '../founders-hub-bot/Chatbot';
 import './LandingPage.css';
+import useAppBarTitle from '../components/useAppBarTitle';
 
 const directLineSecret = 'YOUR_DIRECT_LINE_SECRET_HERE'; // Replace with your Direct Line Secret
 
 const LandingPage: React.FC = () => {
   // Reference to the Chatbot component
   const chatbotRef = useRef<any>(null);
+
+  useAppBarTitle("Explore Founders Hub");
 
   // Function to send message to chatbot
   const sendMessageToChatbot = (message: string) => {

@@ -137,6 +137,20 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  const [title, setTitle] = React.useState("Onboarding to Founders Hub");
+
+  React.useEffect(() => {
+    const handleTitleChange = (event) => {
+      setTitle(event.detail);
+    };
+
+    window.addEventListener('titleChange', handleTitleChange);
+
+    return () => {
+      window.removeEventListener('titleChange', handleTitleChange);
+    };
+  }, []);
+
   return (
     <Router>
       <Box sx={{ display: "flex" }}>
@@ -145,6 +159,7 @@ export default function MiniDrawer() {
           position="fixed"
           open={open}
           handleDrawerOpen={handleDrawerOpen}
+          title={title}
         />
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
