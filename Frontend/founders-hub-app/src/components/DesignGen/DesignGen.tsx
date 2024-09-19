@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import mermaid from 'mermaid';
-import { Box, Button, Grid2 } from '@mui/material';
-import Chatbot from '../founders-hub-bot/Chatbot';
+import { Box, Button, Grid2, Typography } from '@mui/material';
+import Chatbot from '../../founders-hub-bot/Chatbot';
+import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 
 const DIRECT_LINE_SECRET = 'YOUR_DIRECT_LINE_SECRET_HERE';
@@ -65,11 +67,11 @@ const DesignGen = ({ initialDiagram = `flowchart TD
     C -->|Three| F[fa:fa-car Car]`}) => {
   const [diagramState, setDiagramState] = useState(DEFAULT_DIAGRAM);
   const mermaidRef = useRef<HTMLDivElement>(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     mermaid.initialize({ startOnLoad: true });
     const renderDiagram = async () => {
-      if (mermaidRef.current){
+      if (mermaidRef.current) {
         try {
           const { svg } = await mermaid.render(`mermaid`, diagramState);
           mermaidRef.current.innerHTML = svg;
@@ -89,7 +91,11 @@ const DesignGen = ({ initialDiagram = `flowchart TD
 
 
 
-  const handleFileUpload = useCallback((event:React.ChangeEvent<HTMLInputElement>) => {
+  const handleNavigate = (path: string) => {
+    navigate(path);
+  };
+
+  const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -110,7 +116,7 @@ const DesignGen = ({ initialDiagram = `flowchart TD
   return (
     <Grid2 container spacing={2} sx={{ height: '89vh', display: 'flex' }}>
       <Grid2 size={{ xs: 6, md: 9 }} sx={{ height: '100%' }} >
-        <Box 
+        <Box
           sx={{
             height: '100%',
             border: '1px solid black',
@@ -119,7 +125,18 @@ const DesignGen = ({ initialDiagram = `flowchart TD
             overflow: 'auto',
           }}
         >
-          <div id="mermaid-diagram" ref={mermaidRef}/>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+            <Typography variant="h6">Architecture Design tool</Typography>
+            <Box>
+              <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/learning-roadmap')}>
+                Generate Learning Roadmap
+              </Button>
+              <Button variant="contained" color="secondary">
+                Generate Code for prototype
+              </Button>
+            </Box>
+          </Box>
+          <div id="mermaid-diagram" ref={mermaidRef} />
         </Box>
       </Grid2>
       <Grid2 size={{ xs: 6, md: 3 }} sx={{ height: '100%' }}>
@@ -133,8 +150,9 @@ const DesignGen = ({ initialDiagram = `flowchart TD
             flexDirection: 'column',
           }}
         >
-          <Box sx={{ padding: 2, flex: 1 }}>
-            <Chatbot directLineSecret={DIRECT_LINE_SECRET} />
+          <Box sx={{ padding: 2, overflow: 'auto' }}>
+            <Sidebar></Sidebar>
+            {/* <Chatbot directLineSecret={DIRECT_LINE_SECRET} /> */}
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
             <Button variant="contained" component="label">

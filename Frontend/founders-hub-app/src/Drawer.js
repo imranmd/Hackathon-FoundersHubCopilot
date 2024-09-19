@@ -21,11 +21,13 @@ import HelpIcon from '@mui/icons-material/Help';
 import ResponsiveAppBar from './AppBar';
 import LandingPage from './landing-page/LandingPage';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import DesignGen from "./components/DesignGen";
+import DesignGen from "./components/DesignGen/DesignGen";
 import DesignOptimization from "./components/DesignOptimization";
 import LearningRoadmap from "./components/LearningRoadmap";
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import Questionere from "./components/Questionere";
+import CodeGen from './components/CodeGen/CodeGen';
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
 
 const drawerWidth = 240;
 
@@ -39,6 +41,7 @@ const icons = [
   },
   { text: "Learning Roadmap", icon: SchoolIcon, route: "/learning-roadmap" },
   { text: "Design Validation", icon: TaskIcon, route: "/design-validation" },
+  { text: "Prototype Gen Tool", icon: CodeOutlinedIcon, route: "/codegen" },
   { text: "Questionere", icon: QuestionAnswerIcon, route: "/questionere" },
   // { text: "Cost Optimization", icon: SavingsIcon, route: "/cost-optimization" },
 ];
@@ -267,13 +270,14 @@ export default function MiniDrawer() {
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<Questionere />} />
             <Route path="/explore" element={<LandingPage />} />
             <Route path="/arch-design-tool" element={<DesignGen />} />
             <Route path="/design-validation" element={<DesignOptimization />} />
             {/* <Route path="/cost-optimization" element={<DesignOptimization />} /> */}
             <Route path="/learning-roadmap" element={<LearningRoadmap />} />
             <Route path="/questionere" element={<Questionere />} />
+            <Route path="/codegen" element={<CodeGen />} />
           </Routes>
         </Box>
       </Box>
