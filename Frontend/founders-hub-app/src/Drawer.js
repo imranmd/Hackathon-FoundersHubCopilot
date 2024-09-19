@@ -28,7 +28,7 @@ import QuestionAnswerIcon from "@mui/icons-material/QuestionAnswer";
 import Questionere from "./components/Questionere";
 import CodeGen from "./components/CodeGen/CodeGen";
 import CodeOutlinedIcon from "@mui/icons-material/CodeOutlined";
-import { LoadingProvider, useLoading } from './components/Loader/LoadingContext';
+import { useLoading } from './components/Loader/LoadingContext';
 import Loader from './components/Loader/Loader';
 
 const drawerWidth = 240;
