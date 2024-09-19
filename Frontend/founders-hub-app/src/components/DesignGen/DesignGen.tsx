@@ -124,7 +124,7 @@ const DesignGen = () => {
               <Button variant="contained" color="primary" sx={{ mr: 1 }} onClick={() => handleNavigate('/learning-roadmap')}>
                 Generate Learning Roadmap
               </Button>
-              <Button variant="contained" color="secondary">
+              <Button variant="contained" color="secondary" onClick={() => handleNavigate('/codegen')}>
                 Generate Code for prototype
               </Button>
             </Box>
