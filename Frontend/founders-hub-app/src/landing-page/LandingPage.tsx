@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,6 +13,32 @@ const directLineSecret = 'YOUR_DIRECT_LINE_SECRET_HERE'; // Replace with your Di
 const LandingPage: React.FC = () => {
   // Reference to the Chatbot component
   const chatbotRef = useRef<any>(null);
+  const [data, setData] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    // const requestOptions: RequestInit = {
+    //   method: "GET",
+    // };
+    const getData = async () => {
+      try {
+        const response = await fetch("https://foundershub-backend-webapp-cya8bgevbtfeekey.southindia-01.azurewebsites.net/startups/1/?format=json");
+        if(response.ok)
+        {
+          const data= await response.json()
+          setData(data)
+        }
+      }
+      catch ( error)
+      {
+        console.log(error)
+      }
+     
+
+    }
+    getData();
+
+  }, []);
 
   useAppBarTitle("Explore Founders Hub");
 
@@ -23,8 +49,14 @@ const LandingPage: React.FC = () => {
     }
   };
 
+
+
+
+
   return (
     <div className="chatbot-wrapper">
+      {error && <p>Error: {error}</p>}
+    
       {/* Main Content */}
       <div className="main-content">
         <Box className="card-container">

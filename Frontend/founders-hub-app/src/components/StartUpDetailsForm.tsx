@@ -17,6 +17,7 @@ import Chip from '@mui/material/Chip';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Link } from "react-router-dom";
+import { useStartUp } from './Context/StartupContext';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -49,6 +50,7 @@ function getStyles(name: string, list: readonly string[]) {
 
 export default function StartUpDetailsForm(props:any) {
   const [activeStep, setActiveStep] = React.useState(0);
+  const { data, error } = useStartUp();
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -238,11 +240,11 @@ export default function StartUpDetailsForm(props:any) {
             </StepLabel>
             <StepContent>
             <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-            <TextField label="Startup Name" id="startupName" sx={{width: "35%", mt: 2, mb: 1}} value={startupName} onChange={handleStartupNameChange}
+            <TextField label="Startup Name" id="startupName"  sx={{width: "35%", mt: 2, mb: 1}}  value={data?.startup_details?.startup_name || ''} onChange={handleStartupNameChange} 
             />
-            <TextField label="Founder Name" id="founderName" sx={{width: "35%", mt: 2, mb: 1}} value={founderName} onChange={handleFounderNameChange}
+            <TextField label="Founder Name" id="founderName" sx={{width: "35%", mt: 2, mb: 1}} value={data?.startup_details?.founder_name || ''} onChange={handleFounderNameChange}
             />
-            <TextField label="Contact Email" id="contactEmail" sx={{width: "35%", mt: 2, mb: 1}} value={contactEmail} onChange={handleContactEmailChange} type='email'
+            <TextField label="Contact Email" id="contactEmail" sx={{width: "35%", mt: 2, mb: 1}} value={data?.startup_details?.contact_email} onChange={handleContactEmailChange} type='email'
             onKeyDown={(e) => (
                 e.key === "Enter" ? handleNext() : null
             )}
@@ -270,7 +272,7 @@ export default function StartUpDetailsForm(props:any) {
                 <Select
                 labelId="startupStage"
                 id="startupStage"
-                value={startupStage}
+                value={data?.startup_details?.startup_stage}
                 label="Startup Stage"
                 onChange={handleStageChange}
                 >
@@ -285,7 +287,7 @@ export default function StartUpDetailsForm(props:any) {
                 <Select
                 labelId="fundingStatus"
                 id="fundingStatus"
-                value={fundingStatus}
+                value={data?.startup_details?.funding_status}
                 label="Status of the funding"
                 onChange={handlefundStatusChange}
                 >
@@ -296,7 +298,7 @@ export default function StartUpDetailsForm(props:any) {
                 <MenuItem value={"Series C"}>Series C</MenuItem>
                 </Select>
             </FormControl>
-            <TextField label="Number of Employees" id="EmployeeNum" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={numberOfEmployees} onChange={handleEmployeeNumChange}
+            <TextField label="Number of Employees" id="EmployeeNum" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={data?.startup_details?.number_of_employees} onChange={handleEmployeeNumChange}
                 onKeyDown={(e) => (
                     e.key === "Enter" ? handleNext() : null
                 )}
@@ -330,7 +332,7 @@ export default function StartUpDetailsForm(props:any) {
                 <Select
                 labelId="businessDomain"
                 id="businessDomain"
-                value={businessDomain}
+                value={data?.functional_requirements[0]?.business_domain}
                 label="Business Domain"
                 onChange={handleBusinessDomainChange}
                 >
@@ -341,9 +343,9 @@ export default function StartUpDetailsForm(props:any) {
                 <MenuItem value={"Social Media"}>Social Media</MenuItem>
                 </Select>
             </FormControl>
-            <TextField label="Expected Number of Users" id="expectedNumberOfUsers" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={expectedUsersNum} onChange={handleUsersNumChange}
+            <TextField label="Expected Number of Users" id="expectedNumberOfUsers" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={data?.functional_requirements[0]?.expected_number_of_users} onChange={handleUsersNumChange}
             />
-            <TextField label="Expected Number of Transactions" id="expectedNumberOfTransactions" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={expectedTransNum} onChange={handleTransNumChange}
+            <TextField label="Expected Number of Transactions" id="expectedNumberOfTransactions" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={data?.functional_requirements[0]?.expected_number_of_transactions} onChange={handleTransNumChange}
             onKeyDown={(e) => (
                 e.key === "Enter" ? handleNext() : null
             )}
@@ -378,7 +380,7 @@ export default function StartUpDetailsForm(props:any) {
                     labelId="applicationFeatures"
                     id="applicationFeatures"
                     multiple
-                    value={applicationFeatures}
+                    value={data?.functional_requirements[0]?.application_features}
                     onChange={handleApplicationFeaturesChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
@@ -407,7 +409,7 @@ export default function StartUpDetailsForm(props:any) {
                     labelId="userInterface"
                     id="userInterface"
                     multiple
-                    value={userInterface}
+                    value={data?.functional_requirements[0]?.user_interface}
                     onChange={handleUserInterfaceChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
@@ -436,7 +438,7 @@ export default function StartUpDetailsForm(props:any) {
                     labelId="dataManagement"
                     id="dataManagement"
                     multiple
-                    value={dataManagement}
+                    value={data?.functional_requirements[0]?.data_management}
                     onChange={handleDataManagementChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
@@ -488,7 +490,7 @@ export default function StartUpDetailsForm(props:any) {
             <Select
             labelId="cloudProvider"
             id="cloudProvider"
-            value={cloudProvider}
+            value={data?.functional_requirements[0]?.cloud_provider}
             label="Cloud Provider"
             onChange={handlecloudProviderChange}
             >
@@ -502,7 +504,7 @@ export default function StartUpDetailsForm(props:any) {
             <Select
             labelId="deploymentModel"
             id="deploymentModel"
-            value={deploymentModel}
+            value={data?.functional_requirements[0]?.deployment_model}
             label="Deployment Model"
             onChange={handleDeploymentModelChange}
             >
@@ -534,14 +536,14 @@ export default function StartUpDetailsForm(props:any) {
         </StepLabel>
         <StepContent>
         <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-        <TextField label="Budget ($/month)" id="budget" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={budget} onChange={handleBudgetChange}
+        <TextField label="Budget ($/month)" id="budget" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={data?.non_functional_requirements[0]?.budget} onChange={handleBudgetChange}
             />
         <FormControl sx={{width: "35%", mt: 2, mb: 1}}>
             <InputLabel id="costEstimation">Cost Estimation Accuracy</InputLabel>
             <Select
             labelId="costEstimation"
             id="costEstimation"
-            value={costEstimation}
+            value={data?.non_functional_requirements[0]?.cost_estimation}
             label="Cost Estimation Accuracy"
             onChange={handleCostEstimationChange}
             >
@@ -554,7 +556,7 @@ export default function StartUpDetailsForm(props:any) {
             <Select
             labelId="licensing"
             id="licensing"
-            value={licensing}
+            value={data?.non_functional_requirements[0]?.licensing}
             label="Licensing"
             onChange={handleLicensingChange}
             >
@@ -586,18 +588,18 @@ export default function StartUpDetailsForm(props:any) {
         </StepLabel>
         <StepContent>
         <Box sx={{ display: 'flex', flexDirection: 'column'}}>
-        <TextField label="Response Time (ms)" id="responseTime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={responseTime} onChange={handleResponseTimeChange}
+        <TextField label="Response Time (ms)" id="responseTime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={data?.non_functional_requirements[0]?.response_time} onChange={handleResponseTimeChange}
             />
-        <TextField label="Throughput (requests per second)" id="throughput" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={throughput} onChange={handleThroughputChange}
+        <TextField label="Throughput (requests per second)" id="throughput" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={data?.non_functional_requirements[0]?.throughput} onChange={handleThroughputChange}
             />
-        <TextField label="Uptime Requirement (%)" id="uptime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={uptime} onChange={handleUptimeChange}
+        <TextField label="Uptime Requirement (%)" id="uptime" sx={{width: "35%", mt: 2, mb: 1}} inputMode='numeric' value={data?.non_functional_requirements[0]?.uptime} onChange={handleUptimeChange}
             />
         <FormControl sx={{width: "35%", mt: 2, mb: 1}}>
             <InputLabel id="monitoring">Monitoring</InputLabel>
             <Select
             labelId="monitoring"
             id="monitoring"
-            value={monitoring}
+            value={data?.non_functional_requirements[0]?.monitoring}
             label="Monitoring"
             onChange={handleMonitoringChange}
             >
@@ -634,7 +636,7 @@ export default function StartUpDetailsForm(props:any) {
             <Select
             labelId="authentication"
             id="authentication"
-            value={authentication}
+            value={data?.non_functional_requirements[0]?.authentication}
             label="Authentication Mechanism"
             onChange={handleAuthenticationChange}
             >
@@ -648,7 +650,7 @@ export default function StartUpDetailsForm(props:any) {
             <Select
             labelId="authorization"
             id="authorization"
-            value={authorization}
+            value={data?.non_functional_requirements[0]?.authorization}
             label="Authorization Mechanism"
             onChange={handleAuthorizationChange}
             >
@@ -661,7 +663,7 @@ export default function StartUpDetailsForm(props:any) {
             <Select
             labelId="backup"
             id="backup"
-            value={backup}
+            value={data?.non_functional_requirements[0]?.backup}
             label="Backup Frequency"
             onChange={handleBackupChange}
             >
@@ -675,7 +677,7 @@ export default function StartUpDetailsForm(props:any) {
             <Select
             labelId="recovery"
             id="recovery"
-            value={recovery}
+            value={data?.non_functional_requirements[0]?.recovery}
             label="Recovery Mechanism"
             onChange={handleRecoveryChange}
             >
