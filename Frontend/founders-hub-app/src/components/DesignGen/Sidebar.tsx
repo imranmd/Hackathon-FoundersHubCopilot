@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Box, TextField, Select, MenuItem, FormControl, InputLabel, Button, SelectChangeEvent } from '@mui/material';
 
-const Sidebar: React.FC = () => {
+interface MyComponentProps {
+    updateDiagram: (formData: any) => void;
+    handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleClearScreen: () => void;
+  }
+
+const Sidebar: React.FC<MyComponentProps> = ({updateDiagram, handleFileUpload, handleClearScreen}) => {
     const [formData, setFormData] = useState({
         responseTime: '',
         throughput: '',
@@ -13,7 +19,8 @@ const Sidebar: React.FC = () => {
         monitoring: '',
         budget: '',
         costEstimation: '',
-        licensing: '', requirements: '',
+        licensing: '', 
+        requirements: '',
     });
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,12 +48,40 @@ const Sidebar: React.FC = () => {
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log(formData);
-        // Handle form submission logic here
+        updateDiagram(formData);
     };
 
+    const clearScreen = () => {
+        setFormData({
+            responseTime: '',
+            throughput: '',
+            authentication: '',
+            authorization: '',
+            uptime: '',
+            backup: '',
+            recovery: '',
+            monitoring: '',
+            budget: '',
+            costEstimation: '',
+            licensing: '',
+            requirements: '',
+        });
+        handleClearScreen();
+    }
+
     return (
-        <Box sx={{ padding: 2, width: 300, overflow: 'auto' }}>
+<Box
+          sx={{
+            height: '100%',
+            border: '1px solid black',
+            padding: 2,
+            borderRadius: 2,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <Box sx={{ padding: 2, overflow: 'auto' }}>
+          <Box sx={{ padding: 2, width: 300, overflow: 'auto' }}>
             <form onSubmit={handleSubmit}>
                 <TextField
                     name="responseTime"
@@ -173,6 +208,26 @@ Please include the relationships between these components and any necessary data
                     Generate Design
                 </Button>
             </form>
+        </Box>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
+            <Button variant="contained" component="label">
+              Upload File
+              <input
+                type="file"
+                accept=".md"
+                hidden
+                onChange={handleFileUpload}
+              />
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={clearScreen}
+            >
+              Clear Screen
+            </Button>
+          </Box>
         </Box>
     );
 };

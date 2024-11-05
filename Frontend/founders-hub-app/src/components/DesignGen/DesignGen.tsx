@@ -6,8 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import StartupSummary from '../StartupSummary/StartupSummary';
 import useAppBarTitle from '../useAppBarTitle';
 import { useLoading } from '../Loader/LoadingContext';
+import { useStartUp } from '../Context/StartupContext';
+import axios from 'axios';
 
-
+const LOADING_DIAGRAM = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><path fill="none" d="M0 0h200v200H0z"></path><path fill="none" stroke-linecap="round" stroke="#FF156D" stroke-width="15" transform-origin="center" d="M70 95.5V112m0-84v16.5m0 0a25.5 25.5 0 1 0 0 51 25.5 25.5 0 0 0 0-51Zm36.4 4.5L92 57.3M33.6 91 48 82.7m0-25.5L33.6 49m58.5 33.8 14.3 8.2"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="0;-120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path><path fill="none" stroke-linecap="round" stroke="#FF156D" stroke-width="15" transform-origin="center" d="M130 155.5V172m0-84v16.5m0 0a25.5 25.5 0 1 0 0 51 25.5 25.5 0 0 0 0-51Zm36.4 4.5-14.3 8.3M93.6 151l14.3-8.3m0-25.4L93.6 109m58.5 33.8 14.3 8.2"><animateTransform type="rotate" attributeName="transform" calcMode="spline" dur="2" values="0;120" keyTimes="0;1" keySplines="0 0 1 1" repeatCount="indefinite"></animateTransform></path></svg>`;
 
 const DEFAULT_DIAGRAM = `
 graph TD
@@ -61,31 +63,53 @@ graph TD
 `;
 
 const DesignGen = () => {
-  const [diagramState, setDiagramState] = useState(DEFAULT_DIAGRAM);
+  const [diagramState, setDiagramState] = useState('not_started');
+  const [mermaidDiagram, setMermaidDiagram] = useState(LOADING_DIAGRAM);
   const mermaidRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { setLoading } = useLoading();
-  useEffect(() => {
-    mermaid.initialize({ startOnLoad: true });
-    const renderDiagram = async () => {
-      if (mermaidRef.current) {
+  const { data, error } = useStartUp();
+
+  mermaid.initialize({ startOnLoad: true });
+  
+  const renderDiagram = useCallback(async () => {
+    if(mermaidRef.current){
+      if(diagramState === 'error') {
+        mermaidRef.current.innerHTML = `<pre>Error loading diagram</pre>`;
+      } else if(diagramState === 'ready') {
         try {
-          const { svg } = await mermaid.render(`mermaid`, diagramState);
+          const { svg } = await mermaid.render(`mermaid`, mermaidDiagram);
           mermaidRef.current.innerHTML = svg;
         } catch (err) {
-          console.error('Mermaid rendering error:', err);
-          mermaidRef.current.innerHTML = `<pre>${diagramState}</pre>`;
+          mermaidRef.current.innerHTML = `<pre>${mermaidDiagram}</pre>`;
         }
+      } else {
+        mermaidRef.current.innerHTML = mermaidDiagram;
       }
-    };
+    }
+  }, [mermaidDiagram, diagramState]);
 
-    const timer = setTimeout(() => {
-      renderDiagram();
-    }, 0);
+  const fetchMermaid = useCallback(async (body: any, prompt: string) => {
+    try {
+      setMermaidDiagram(LOADING_DIAGRAM);
+      setDiagramState('loading');
+      const response = await axios.post('https://foundershub-backend-webapp-cya8bgevbtfeekey.southindia-01.azurewebsites.net/ai-api/getArchitecture?prompt='+prompt, body);
+      setMermaidDiagram(response.data.response);
+      setDiagramState('ready');
+    } catch (error) {
+      setMermaidDiagram(DEFAULT_DIAGRAM);
+      setDiagramState('error');
+    }
+  }, []);
 
-    return () => clearTimeout(timer);
-  }, [diagramState]);
-
+  useEffect(() => {
+    if(data!=null){
+      if(diagramState === 'not_started') {
+        fetchMermaid(data, "");
+      }
+      else renderDiagram();
+    } else renderDiagram();
+  }, [diagramState, data, renderDiagram, fetchMermaid]);
 
 
   const handleNavigate = (path: string, loadingMessage?:string) => {
@@ -96,6 +120,24 @@ const DesignGen = () => {
     }, 3000); // 3 seconds timeout
   };
 
+  const updateDiagram = (formData: any) => {
+    var requirements = data.non_functional_requirements[0];
+    requirements = {
+      ...requirements,
+      ...(formData.responseTime !== "" ? { response_time: formData.responseTime } : {}),
+      ...(formData.throughput !== "" ? { throughput: formData.throughput } : {}),
+      ...(formData.authentication !== "" ? { authentication: formData.authentication } : {}),
+      ...(formData.authorization !== "" ? { authorization: formData.authorization } : {}),
+      ...(formData.uptime !== "" ? { uptime: formData.uptime } : {}),
+      ...(formData.recovery !== "" ? { recovery: formData.responseTime } : {}),
+      ...(formData.monitoring !== "" ? { monitoring: formData.monitoring } : {}),
+      ...(formData.budget !== "" ? { budget: formData.budget } : {}),
+      ...(formData.costEstimation !== "" ? { cost_estimation: formData.costEstimation } : {}),
+      ...(formData.licensing !== "" ? { licensing: formData.licensing } : {}),
+    };
+    fetchMermaid({...data, non_functional_requirements: [requirements]}, formData.requirements);
+  }
+
   const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -103,16 +145,17 @@ const DesignGen = () => {
       reader.onload = (e) => {
         const content = e.target?.result;
         if (typeof content === 'string') {
-          setDiagramState(content);
+          setMermaidDiagram(content);
+          renderDiagram();
         }
       };
       reader.readAsText(file);
     }
-  }, []);
+  }, [renderDiagram]);
 
-  const handleClearScreen = useCallback(() => {
-    setDiagramState(DEFAULT_DIAGRAM);
-  }, []);
+  const handleClearScreen = () => {
+    setDiagramState('not_started');
+  };
 
   useAppBarTitle("Architecture Design Tool");
 
@@ -144,38 +187,7 @@ const DesignGen = () => {
         </Box>
       </Grid2>
       <Grid2 size={{ xs: 6, md: 3 }} sx={{ height: '100%' }}>
-        <Box
-          sx={{
-            height: '100%',
-            border: '1px solid black',
-            padding: 2,
-            borderRadius: 2,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Box sx={{ padding: 2, overflow: 'auto' }}>
-            <Sidebar></Sidebar>
-          </Box>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
-            <Button variant="contained" component="label">
-              Upload File
-              <input
-                type="file"
-                accept=".md"
-                hidden
-                onChange={handleFileUpload}
-              />
-            </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleClearScreen}
-            >
-              Clear Screen
-            </Button>
-          </Box>
-        </Box>
+      <Sidebar updateDiagram={updateDiagram} handleClearScreen={handleClearScreen} handleFileUpload={handleFileUpload}></Sidebar>
       </Grid2>
       <StartupSummary
         name="Tech Innovators"

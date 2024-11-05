@@ -15,6 +15,7 @@
     "@types/node": "^22.5.5",
     "@types/react": "^18.3.7",
     "@types/react-dom": "^18.3.0",
+    "axios": "^1.7.7",
     "botframework-webchat": "^4.18.0",
     "mermaid": "^11.2.1",
     "react": "^18.3.1",
